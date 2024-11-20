@@ -1,0 +1,86 @@
+name: Build and Publish
+
+on:
+  push:
+    tags:
+      - "v*"
+
+jobs:
+  build:
+    strategy:
+      matrix:
+        os: [windows-latest, ubuntu-latest, macos-latest]
+    runs-on: ${{ matrix.os }}
+    
+    steps:
+    - uses: actions/checkout@v4
+
+    - name: Setup .NET
+      uses: actions/setup-dotnet@v4
+      with:
+        dotnet-version: 8.0.x
+        
+    - name: Restore dependencies
+      run: dotnet restore
+      
+    - name: Build
+      run: dotnet build --configuration Release --no-restore
+      
+    - name: Get Version
+      id: get_version
+      run: echo "VERSION=${GITHUB_REF#refs/tags/v}" >> $GITHUB_ENV
+      shell: bash
+      
+    - name: Upload artifact
+      uses: actions/upload-artifact@v4
+      with:
+        name: Emby.Notifications.Bark-${{ matrix.os }}
+        path: ./Emby.Notifications.Bark/bin/Release/net6.0/Emby.Notifications.Bark.dll
+
+  release:
+    needs: build
+    runs-on: ubuntu-latest
+    steps:
+    - name: Create Release
+      id: create_release
+      uses: actions/create-release@v1
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      with:
+        tag_name: ${{ github.ref }}
+        release_name: Release ${{ github.ref }}
+        draft: false
+        prerelease: false
+
+    - name: Download all artifacts
+      uses: actions/download-artifact@v4
+      
+    - name: Upload Windows Release Asset
+      uses: actions/upload-release-asset@v1
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      with:
+        upload_url: ${{ steps.create_release.outputs.upload_url }}
+        asset_path: ./Emby.Notifications.Bark-windows-latest/Emby.Notifications.Bark.dll
+        asset_name: Emby.Notifications.Bark-windows.dll
+        asset_content_type: application/x-msdownload
+
+    - name: Upload Ubuntu Release Asset
+      uses: actions/upload-release-asset@v1
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      with:
+        upload_url: ${{ steps.create_release.outputs.upload_url }}
+        asset_path: ./Emby.Notifications.Bark-ubuntu-latest/Emby.Notifications.Bark.dll
+        asset_name: Emby.Notifications.Bark-linux.dll
+        asset_content_type: application/x-msdownload
+
+    - name: Upload macOS Release Asset
+      uses: actions/upload-release-asset@v1
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      with:
+        upload_url: ${{ steps.create_release.outputs.upload_url }}
+        asset_path: ./Emby.Notifications.Bark-macos-latest/Emby.Notifications.Bark.dll
+        asset_name: Emby.Notifications.Bark-macos.dll
+        asset_content_type: application/x-msdownload
