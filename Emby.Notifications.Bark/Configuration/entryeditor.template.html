@@ -1,0 +1,18 @@
+﻿<div class="inputContainer">
+    <input is="emby-input" type="text" class="txtFriendlyName" required="required" label="${LabelName}:" />
+    <div class="fieldDescription">${FriendlyNameForReferenceHelp}</div>
+</div>
+
+<div class="inputContainer">
+    <input is="emby-input" type="text" class="txtServerUrl" label="${LabelBarkWebhookUrl}:" />
+    <div class="fieldDescription">Your Bark server URL (e.g., https://api.day.app/)</div>
+</div>
+
+<div class="inputContainer">
+    <input is="emby-input" type="text" class="txtDeviceKey" required="required" label="${LabelDeviceKey}:" />
+</div>
+
+<div class="inputContainer">
+    <input is="emby-input" type="text" class="txtParameter" required="required" label="${LabelBarkQuery}:" />
+    <div class="fieldDescription">Notification parameter (e.g., group=GroupName&icon=iconUrl)</div>
+</div>

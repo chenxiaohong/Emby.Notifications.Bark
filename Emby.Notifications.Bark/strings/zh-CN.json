@@ -1,0 +1,6 @@
+{
+    "LabelBarkWebhookUrl": "Bark 服务器地址",
+    "LabelDeviceKey": "设备密钥",
+    "LabelBarkQuery": "附加参数",
+    "LabelMentionType": "提及类型"
+}

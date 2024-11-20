@@ -1,0 +1,6 @@
+{
+    "LabelBarkWebhookUrl": "Bark Server URL",
+    "LabelDeviceKey": "Device Key",
+    "LabelBarkQuery": "Additional Parameters",
+    "LabelMentionType": "Mention Type"
+}
