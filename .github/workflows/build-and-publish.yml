@@ -35,7 +35,7 @@ jobs:
       uses: actions/upload-artifact@v4
       with:
         name: Emby.Notifications.Bark-${{ matrix.os }}
-        path: ./Emby.Notifications.Bark/bin/Release/net6.0/Emby.Notifications.Bark.dll
+        path: ./Emby.Notifications.Bark/bin/Release/net8.0/Emby.Notifications.Bark.dll
 
   release:
     needs: build
