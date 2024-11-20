@@ -10,10 +10,6 @@ on:
     branches: [ "main" ]
   workflow_dispatch:
 
-defaults:
-  run:
-    working-directory: ./Emby.Notifications.Bark
-
 jobs:
   build:
 
