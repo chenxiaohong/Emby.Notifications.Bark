@@ -6,7 +6,7 @@
 
 ### 安装步骤
 1. 下载插件文件，建议重命名为`Emby.Notifications.Bark.dll`
-2. 将插件放入Emby的插件目录
+2. 将插件复制到Emby的插件目录，一般为`config/plugins`
 3. 重启Emby服务器
 4. 在`通知`中点击`添加通知`，下拉列表中选择`Bark`
 5. 在插件配置页面设置Bark服务器地址和设备Key
